@@ -1,0 +1,20 @@
+{
+    "name": "it-shura/mediawiki-bot",
+    "description": "Bots platform for MediaWiki",
+    "type": "project",
+    "keywords": ["mediawiki", "bot"],
+    "license": "MIT",
+    "homepage": "https://github.com/IT-Shura/MediaWikiBot",
+    "authors": [
+        {
+            "name": "Imangazaliev Muhammad",
+            "email": "imangazalievm@gmail.com"
+        }
+    ],
+    "require": {
+        "it-shura/mediawiki-sdk": "0.0.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8"
+    }
+}
