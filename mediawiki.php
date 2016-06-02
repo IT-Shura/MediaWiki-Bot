@@ -19,7 +19,6 @@ if (!file_exists(__DIR__.'/user-config.php')) {
 $config = require __DIR__.'/user-config.php';
 
 $projectName = $config['project'];
-$defaultLanguage = $config['lang'];
 
 $client = new GuzzleHttpClient();
 $storage = new FileStore(__DIR__.'/storage');
@@ -28,7 +27,7 @@ $projectManager = new ProjectManager($client, $storage, __DIR__.'/projects');
 
 $commandManager = new CommandManager($storage, __DIR__.'/scripts');
 
-$project = $projectManager->loadProject($projectName, $defaultLanguage);
+$project = $projectManager->loadProject($projectName);
 
 $application = new Application();
 
