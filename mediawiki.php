@@ -4,7 +4,7 @@
 use MediaWiki\Bot\CommandManager;
 use MediaWiki\Bot\ProjectManager;
 use MediaWiki\Storage\FileStore;
-use MediaWiki\Api\HttpClient\GuzzleHttpClient;
+use MediaWiki\HttpClient\GuzzleHttpClient;
 use Symfony\Component\Console\Application;
 
 require 'vendor/autoload.php';
@@ -31,14 +31,10 @@ $project = $projectManager->loadProject($projectName);
 
 $application = new Application();
 
-$commands = scandir(__DIR__.'/scripts');
+$commands = $commandManager->getCommandsList();
 
 foreach ($commands as $command) {
-    if (in_array($command, ['.', '..'])) {
-        continue;
-    }
-
-    $instance = $commandManager->getCommand(basename($command, '.php'), $project);
+    $instance = $commandManager->getCommand($command, $project);
 
     $instance->setProjectManager($projectManager);
 
