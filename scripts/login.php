@@ -29,6 +29,13 @@ class Login extends Command
         ];
     }
 
+    public function getOptions()
+    {
+        return [
+            ['logout', null, InputOption::VALUE_NONE, 'If set, user will log out', null],
+        ];
+    }
+
     /**
      * Execute the console command.
      *
@@ -40,8 +47,17 @@ class Login extends Command
 
         $this->logout($language);
 
+        if ($this->option('logout')) {
+            exit;
+        }
+
         if ($result = $this->login($language)) {
-            $this->info('Logged in');
+            $url = $this->project->getApiUrls()[$language];
+            $url = parse_url($url, PHP_URL_HOST);
+
+            $username = $this->project->getApiUsernames()[$language];
+
+            $this->info(sprintf('Logged in on %s as %s', $url, $username));
         }
     }
 }
