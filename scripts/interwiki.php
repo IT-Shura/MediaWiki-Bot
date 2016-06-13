@@ -49,17 +49,6 @@ class Interwiki extends Command
         if (!file_exists($this->reportsDirectory)) {
             mkdir($this->reportsDirectory, 777, true);
         }
-
-        // clear reports directory
-        $files = scandir($this->reportsDirectory);
-
-        foreach ($files as $file) {
-            if (in_array($file, ['.', '..'])) {
-                continue;
-            }
-
-            unlink($this->reportsDirectory.'/'.$file);
-        }
     }
 
     public function getArguments()
@@ -122,7 +111,11 @@ class Interwiki extends Command
 
         $this->storage->forever('interwiki.last-action', 'all');
 
-        $this->handlePages($language, [], $reset);
+        $data = [
+            'apnamespace' => 0,
+        ];
+
+        $this->handlePages($language, $data, $reset);
     }
 
     public function handlePagesInNamespace($language, $namespace)
@@ -403,6 +396,10 @@ class Interwiki extends Command
         ];   
 
         foreach ($langLinks as $language => $title) {
+            if ($title === '') {
+                continue;
+            }
+
             if ($this->isRejected($title, $language)) {
                 continue;
             }
@@ -491,6 +488,10 @@ class Interwiki extends Command
 
     public function loadPage($title, $language, $properties = null, $extParameters = [])
     {
+        if ($title === '') {
+            throw new InvalidArgumentException(sprintf('Title must not be empty (%s)', $language));
+        }
+
         $parameters = [
             'titles' => $title,
             'prop' => $properties,
