@@ -21,7 +21,7 @@ $config = require __DIR__.'/user-config.php';
 $projectName = $config['project'];
 
 $client = new GuzzleHttpClient();
-$storage = new FileStore(__DIR__.'/storage');
+$storage = new FileStore(__DIR__.'/storage/cache');
 
 $projectManager = new ProjectManager($client, $storage, __DIR__.'/projects');
 
