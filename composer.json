@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "it-shura/mediawiki-sdk": "0.0.10"
+        "it-shura/mediawiki-sdk": "0.0.13"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8"
