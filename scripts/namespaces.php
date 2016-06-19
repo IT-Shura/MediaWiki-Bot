@@ -71,17 +71,4 @@ class Namespaces extends Command
 
         $this->table($header, $data);
     }
-
-    public function getNamespaceList($language)
-    {
-        $parameters = [
-            'meta' => 'siteinfo',
-            'siprop'=> 'namespaces',
-            'formatversion' => 2,
-        ];
-
-        $response = $this->project->api($language)->query($parameters);
-
-        return $response['query']['namespaces'];
-    }
 }

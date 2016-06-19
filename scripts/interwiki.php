@@ -126,7 +126,7 @@ class Interwiki extends Command
         $this->storage->forever('interwiki.last-action', 'namespace');
         $this->storage->forever('interwiki.last-namespace', $namespace);
 
-        $namespaces = $this->getNamespaceList($language);
+        $namespaces = $this->project->service('namespaces')->getList($language);
 
         $namespaceId = null;
 
@@ -149,19 +149,6 @@ class Interwiki extends Command
         ];
 
         $this->handlePages($language, $data, $reset);
-    }
-
-    public function getNamespaceList($language)
-    {
-        $parameters = [
-            'meta' => 'siteinfo',
-            'siprop'=> 'namespaces',
-            'formatversion' => 2,
-        ];
-
-        $response = $this->project->api($language)->query($parameters);
-
-        return $response['query']['namespaces'];
     }
 
     public function handleSpecifiedPages($language, $titles)
