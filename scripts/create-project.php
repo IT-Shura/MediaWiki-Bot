@@ -5,14 +5,14 @@ use Symfony\Component\Console\Input\InputOption;
 use MediaWiki\Bot\Command;
 use MediaWiki\Helpers;
 
-class MakeProject extends Command
+class CreateProject extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'make:project';
+    protected $name = 'create-project';
 
     /**
      * The console command description.
@@ -38,9 +38,17 @@ class MakeProject extends Command
      */
     public function handle()
     {
-        $name = $this->ask('Please enter the project name');
-        $title = $this->ask('Please enter the project title');
-        $defaultLanguage = $this->ask('Please specify default language for the project');
+        $name = $this->ask('Please enter the project name (example: my-project)');
+        $title = $this->ask('Please enter the project title (example: My Project)');
+        $defaultLanguage = $this->ask('Please specify default language for the project (example: en)');
+
+        $filename = sprintf('%s/../projects/%s.php', __DIR__, $name);
+
+        if (file_exists($filename)) {
+            $this->error(sprintf('Project with name "%s" already exists.', $name));
+
+            exit;
+        }
         
         $className = Helpers\pascal_case($name);
 
@@ -50,14 +58,6 @@ class MakeProject extends Command
         $replace = [$className, $name, $title, $defaultLanguage];
 
         $stub = str_replace($search, $replace, $stub);
-
-        $filename = sprintf('%s/../projects/%s.php', __DIR__, $name);
-
-        if (file_exists($filename)) {
-            $this->error(sprintf('Project with name "%s" already exists.', $name));
-
-            exit;
-        }
 
         file_put_contents($filename, $stub);
 
