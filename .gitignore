@@ -4,4 +4,4 @@ composer.lock
 .DS_Store
 Thumbs.db
 .idea/
-user-config.php
+/user-config.php
