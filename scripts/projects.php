@@ -22,7 +22,7 @@ class Projects extends Command
 
     public function handle()
     {
-        $headers = ['Code', 'Name'];
+        $header = ['Code', 'Name'];
 
         $projects = [];
 
@@ -33,6 +33,6 @@ class Projects extends Command
             ];
         }
 
-        $this->table($headers, $projects);
+        $this->table($header, $projects);
     }
 }
